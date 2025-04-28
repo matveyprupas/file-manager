@@ -1,5 +1,7 @@
 import process from 'node:process';
 import { runPathModule } from './path.js';
+import { runNavModule } from './nav.js';
+import { colorize } from '../utils.js';
 import { __dirname } from '../constants.js';
 
 const parsedArgs = process.argv.filter(arg => arg.startsWith("--")).reduce((acc, arg) => {
@@ -17,10 +19,12 @@ const echoInput = (chunk) => {
 };
 
 export const runFileManager = () => {
-  runPathModule();
   const username = parsedArgs.username || 'Username';
   
-  process.stdout.write(`Welcome to the File Manager, ${username}!\nYou are currently in ${__dirname}\n`);
+  process.stdout.write(`Welcome to the File Manager, ${username}!\nYou are currently in ${colorize(__dirname, 'blueBold')}\n`);
+  
+  runPathModule();
+  runNavModule();
   
   process.stdin.on('data', echoInput);
   
